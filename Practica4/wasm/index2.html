@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Wasm сумма чисел</title></head>
+<body>
+<button onclick="run()">Запустить</button>
+<script>
+async function run() {
+    try {
+        const imports = {
+            env: {
+                prompt: () => parseInt(window.prompt("Введите число (0 для выхода):")),
+                alert:  (x) => window.alert("Сумма: " + x)
+            }
+        };
+        const { instance } = await WebAssembly.instantiateStreaming(
+            fetch('sum2.wasm'),        // ← было task11_sum.wasm
+            imports
+        );
+        instance.exports.main();
+    } catch (e) {
+        console.error(e);
+        alert("Ошибка: " + e.message);
+    }
+}
+run();
+</script>
+</body>
+</html>

@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head><meta charset="utf-8"><title>Wasm S(n)</title></head>
+<body>
+<script>
+async function run() {
+    try {
+        const { instance } = await WebAssembly.instantiateStreaming(
+            fetch('sum.wasm'),
+            {}                          // у sum.wasm импортов нет — пустой объект
+        );
+        console.log("S(10) =", instance.exports.S(10));
+    } catch (e) {
+        console.error(e);
+    }
+}
+run();
+</script>
+</body>
+</html>
